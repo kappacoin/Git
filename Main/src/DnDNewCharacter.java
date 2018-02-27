@@ -1,3 +1,7 @@
+import com.sun.jdi.Value;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -42,13 +46,13 @@ public class DnDNewCharacter {
 
 
         //statystyki
-        Spinner<Integer> StrenghtSpinn = new Spinner<Integer>(1,20,8);
-        Spinner<Integer> DexteritySpinn = new Spinner<Integer>(1,20,8);
-        Spinner<Integer> ConstitutionSpinn = new Spinner<Integer>(1,20,8);
-        Spinner<Integer> IntelligenceSpinn = new Spinner<Integer>(1,20,8);
-        Spinner<Integer> WisdomSpinn = new Spinner<Integer>(1,20,8);
-        Spinner<Integer> CharismaSpinn = new Spinner<Integer>(1,20,8);
-        ComboBox<Integer> LvlBox = new ComboBox<Integer>();
+        Spinner<Integer> StrenghtSpinn = new Spinner(1,20,8);
+        Spinner<Integer> DexteritySpinn = new Spinner(1,20,8);
+        Spinner<Integer> ConstitutionSpinn = new Spinner(1,20,8);
+        Spinner<Integer> IntelligenceSpinn = new Spinner(1,20,8);
+        Spinner<Integer> WisdomSpinn = new Spinner(1,20,8);
+        Spinner<Integer> CharismaSpinn = new Spinner(1,20,8);
+        ComboBox<Integer> LvlBox = new ComboBox();
         Label Lvl = new Label(), Str = new Label(), Dex = new Label(), Constitution = new Label(), Intel = new Label(), Wis = new Label(), Charisma = new Label();
 
         Str.setText("Strength: ");
@@ -60,8 +64,6 @@ public class DnDNewCharacter {
         Lvl.setText("Character LVL");
         LvlBox.getItems().addAll(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
         LvlBox.setValue(1);
-
-
 
         WyborRasy.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -76,15 +78,14 @@ public class DnDNewCharacter {
                 switch(s) {
                     case "Dragonborn":
                         Info.setText("Smok blablabla \n blaaewfagfaef");
-                        RaceLayout.getChildren().clear();
+                        //RaceLayout.getChildren().clear();
                         RaceLayout.getChildren().addAll(WyborRasy, Info);
-
                         break;
 
                     case "Dwarf":
                         Info.setText("Informacje o Krasnalach blablabla \n blaaewfagfaef");
                         WyborPodRasy.getItems().addAll("Hill Dwarf", "Mountain Dwarf");
-                        RaceLayout.getChildren().clear();
+                        //RaceLayout.getChildren().clear();
                         RaceLayout.getChildren().addAll(WyborRasy, WyborPodRasy, Info);
                         break;
 
@@ -180,39 +181,60 @@ public class DnDNewCharacter {
 
 
         // Statystyki 2
-
         Tab StatTab = new Tab("Stats");
-        Label StatInfo = new Label("Please, set your starting stats");
-
 
         GridPane StatPane = new GridPane();
         StatPane.setPadding(new Insets(10));
         StatPane.setHgap(5);
         StatPane.setVgap(5);
         ColumnConstraints Kolumna1 = new ColumnConstraints(75);
-        ColumnConstraints Kolumna2 = new ColumnConstraints(75);
+        ColumnConstraints Kolumna2 = new ColumnConstraints(200);
+
+        Label FirstInfo = new Label("Please set your starting stats:");
+        Integer Pkt = 27;
+        Label Punkty = new Label("Points to spend: "+Pkt);
 
         StatPane.getColumnConstraints().addAll(Kolumna1, Kolumna2);
 
-
         StatPane.add(Lvl,0,0);
         StatPane.add(LvlBox,1,0);
-        StatPane.add(Str, 0, 1);
-        StatPane.add(StrenghtSpinn,1,1);
-        StatPane.add(Dex, 0, 2);
-        StatPane.add(DexteritySpinn,1,2);
-        StatPane.add(Constitution, 0, 3);
-        StatPane.add(ConstitutionSpinn,1,3);
-        StatPane.add(Intel, 0, 4);
-        StatPane.add(IntelligenceSpinn,1,4);
-        StatPane.add(Wis, 0, 5);
-        StatPane.add(WisdomSpinn,1,5);
-        StatPane.add(Charisma, 0, 6);
-        StatPane.add(CharismaSpinn,1,6);
+        StatPane.add(FirstInfo,1,2);
+        StatPane.add(Str, 0, 3);
+        StatPane.add(StrenghtSpinn,1,3);
+        StatPane.add(Dex, 0, 4);
+        StatPane.add(DexteritySpinn,1,4);
+        StatPane.add(Constitution, 0, 5);
+        StatPane.add(ConstitutionSpinn,1,5);
+        StatPane.add(Intel, 0, 6);
+        StatPane.add(IntelligenceSpinn,1,6);
+        StatPane.add(Wis, 0, 7);
+        StatPane.add(WisdomSpinn,1,7);
+        StatPane.add(Charisma, 0, 8);
+        StatPane.add(CharismaSpinn,1,8);
+        StatPane.add(Punkty,1,10);
+
+        StrenghtSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13){
+                System.out.println("Zmniejsz Punkty o 1");
+            }
+            if(oldValue>newValue){
+                System.out.println("Zwieksz Punkty o 1");
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>13){
+                System.out.println("Zmniejsz pkt o 2");
+            }
+            if(newValue<=13&&oldValue>13){
+                System.out.println("Zwiększ o 2 pkt");
+            }
+        });
 
         StatTab.setContent(StatPane);
-
-
 
 
 
