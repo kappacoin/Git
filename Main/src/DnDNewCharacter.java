@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -34,8 +35,10 @@ public class DnDNewCharacter {
         WyborRasy.getItems().addAll("Dragonborn", "Dwarf", "Elf", "Gnome", "Halfling", "Half-Elf", "Half-Orc", "Human", "Tiefling");
         WyborRasy.setPromptText("Choose Your Race");
 
-        Label Info = new  Label();
-        Label InfoPod = new Label();
+        //Label Info = new  Label();
+        Text Info = new Text("");
+        Text InfoPod = new Text("");
+        //Label InfoPod = new Label();
 
         VBox RaceLayout = new VBox(20);
         RaceTab.setContent(RaceLayout);
@@ -78,14 +81,14 @@ public class DnDNewCharacter {
                 switch(s) {
                     case "Dragonborn":
                         Info.setText("Smok blablabla \n blaaewfagfaef");
-                        //RaceLayout.getChildren().clear();
+                        RaceLayout.getChildren().clear();
                         RaceLayout.getChildren().addAll(WyborRasy, Info);
                         break;
 
                     case "Dwarf":
                         Info.setText("Informacje o Krasnalach blablabla \n blaaewfagfaef");
                         WyborPodRasy.getItems().addAll("Hill Dwarf", "Mountain Dwarf");
-                        //RaceLayout.getChildren().clear();
+                        RaceLayout.getChildren().clear();
                         RaceLayout.getChildren().addAll(WyborRasy, WyborPodRasy, Info);
                         break;
 
@@ -144,32 +147,49 @@ public class DnDNewCharacter {
 
                         switch (x){
                             case("Hill Dwarf"):
+                                InfoPod.setText("Hill Dwarf blablabla \n blaaewfagfaef");
+                                RaceLayout.getChildren().addAll(InfoPod);
                                 break;
 
 
                             case ("Mountain Dwarf"):
+                                InfoPod.setText("Mountain Dwarf blablabla \n blaaewfagfaef");
+                                RaceLayout.getChildren().addAll(InfoPod);
                                 break;
 
                             case ("Forest Gnome"):
+                                InfoPod.setText("Forest Gnome blablabla \n blaaewfagfaef");
+                                RaceLayout.getChildren().addAll(InfoPod);
                                 break;
 
-
                             case ("Rock Gnome"):
+                                InfoPod.setText("Rock Gnome blablabla \n blaaewfagfaef");
+                                RaceLayout.getChildren().addAll(InfoPod);
                                 break;
 
                             case ("Stout"):
+                                InfoPod.setText("Stout Halfling blablabla \n blaaewfagfaef");
+                                RaceLayout.getChildren().addAll(InfoPod);
                                 break;
 
                             case ("Lightfoot"):
+                                InfoPod.setText("Lightfoot Halfling blablabla \n blaaewfagfaef");
+                                RaceLayout.getChildren().addAll(InfoPod);
                                 break;
 
                             case ("High Elf"):
+                                InfoPod.setText("High Elf blablabla \n blaaewfagfaef");
+                                RaceLayout.getChildren().addAll(InfoPod);
                                 break;
 
                             case ("Wood Elf"):
+                                InfoPod.setText("Wood Elf blablabla \n blaaewfagfaef");
+                                RaceLayout.getChildren().addAll(InfoPod);
                                 break;
 
                             case ("Drow"):
+                                InfoPod.setText("Drow blablabla \n blaaewfagfaef");
+                                RaceLayout.getChildren().addAll(InfoPod);
                                 break;
                         }
                     }
@@ -192,7 +212,8 @@ public class DnDNewCharacter {
 
         Label FirstInfo = new Label("Please set your starting stats:");
         Integer Pkt = 27;
-        Label Punkty = new Label("Points to spend: "+Pkt);
+        //Label Punkty = new Label("Points to spend: "+Pkt);
+        Text t = new Text("Krzemek "+Pkt);
 
         StatPane.getColumnConstraints().addAll(Kolumna1, Kolumna2);
 
@@ -211,7 +232,7 @@ public class DnDNewCharacter {
         StatPane.add(WisdomSpinn,1,7);
         StatPane.add(Charisma, 0, 8);
         StatPane.add(CharismaSpinn,1,8);
-        StatPane.add(Punkty,1,10);
+        StatPane.add(t,1,10);
 
         StrenghtSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
             if(oldValue<newValue&&newValue<=13){
