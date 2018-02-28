@@ -1,20 +1,15 @@
-import com.sun.jdi.Value;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.List;
+import javax.script.Bindings;
 
 
 public class DnDNewCharacter {
@@ -35,10 +30,8 @@ public class DnDNewCharacter {
         WyborRasy.getItems().addAll("Dragonborn", "Dwarf", "Elf", "Gnome", "Halfling", "Half-Elf", "Half-Orc", "Human", "Tiefling");
         WyborRasy.setPromptText("Choose Your Race");
 
-        //Label Info = new  Label();
-        Text Info = new Text("");
-        Text InfoPod = new Text("");
-        //Label InfoPod = new Label();
+        Label Info = new  Label();
+        Label InfoPod = new Label();
 
         VBox RaceLayout = new VBox(20);
         RaceTab.setContent(RaceLayout);
@@ -46,6 +39,7 @@ public class DnDNewCharacter {
         RaceLayout.getChildren().addAll(WyborRasy);
         RaceLayout.setAlignment(Pos.TOP_CENTER);
         RaceLayout.setPadding(new Insets(15));
+
 
 
         //statystyki
@@ -68,6 +62,7 @@ public class DnDNewCharacter {
         LvlBox.getItems().addAll(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
         LvlBox.setValue(1);
 
+
         WyborRasy.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -82,7 +77,7 @@ public class DnDNewCharacter {
                     case "Dragonborn":
                         Info.setText("Smok blablabla \n blaaewfagfaef");
                         RaceLayout.getChildren().clear();
-                        RaceLayout.getChildren().addAll(WyborRasy, Info);
+                        RaceLayout.getChildren().addAll(WyborRasy,Info);
                         break;
 
                     case "Dwarf":
@@ -208,18 +203,18 @@ public class DnDNewCharacter {
         StatPane.setHgap(5);
         StatPane.setVgap(5);
         ColumnConstraints Kolumna1 = new ColumnConstraints(75);
-        ColumnConstraints Kolumna2 = new ColumnConstraints(200);
+        ColumnConstraints Kolumna2 = new ColumnConstraints(155);
+        ColumnConstraints Kolumna3 = new ColumnConstraints(155);
 
-        Label FirstInfo = new Label("Please set your starting stats:");
-        Integer Pkt = 27;
-        //Label Punkty = new Label("Points to spend: "+Pkt);
-        Text t = new Text("Krzemek "+Pkt);
+        Label Please = new Label("Please set your starting stats:");
+        final Integer[] Pkt = {27};
+        Label Punkty = new Label("Points to spend: 27");
 
-        StatPane.getColumnConstraints().addAll(Kolumna1, Kolumna2);
+        StatPane.getColumnConstraints().addAll(Kolumna1, Kolumna2, Kolumna3);
 
         StatPane.add(Lvl,0,0);
         StatPane.add(LvlBox,1,0);
-        StatPane.add(FirstInfo,1,2);
+        StatPane.add(Please,1,2);
         StatPane.add(Str, 0, 3);
         StatPane.add(StrenghtSpinn,1,3);
         StatPane.add(Dex, 0, 4);
@@ -232,14 +227,21 @@ public class DnDNewCharacter {
         StatPane.add(WisdomSpinn,1,7);
         StatPane.add(Charisma, 0, 8);
         StatPane.add(CharismaSpinn,1,8);
-        StatPane.add(t,1,10);
+        StatPane.add(Punkty,1,10);
+
+
+        //BARDZO WAZNE LICZNIKI PUNKTOW
 
         StrenghtSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
-            if(oldValue<newValue&&newValue<=13){
-                System.out.println("Zmniejsz Punkty o 1");
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
             }
-            if(oldValue>newValue){
-                System.out.println("Zwieksz Punkty o 1");
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
             }
             if(newValue<8){
                 System.out.println("Uwaga, jestes gorszy od ludzia");
@@ -247,17 +249,173 @@ public class DnDNewCharacter {
             if(newValue>15){
                 System.out.println("Uwaga, jestes lepszy od ludzia");
             }
-            if(newValue>13){
-                System.out.println("Zmniejsz pkt o 2");
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
             }
-            if(newValue<=13&&oldValue>13){
-                System.out.println("Zwiększ o 2 pkt");
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
             }
         });
 
+        DexteritySpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+        });
+
+        ConstitutionSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+        });
+
+        IntelligenceSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+        });
+
+        WisdomSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+        });
+
+        CharismaSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+        });
+
+        //Koniec BARDZO WAZNEGO LICZNIKA
+
+        //Dodaję modyfikatory
+
+
+
+
+        //Koniec modyfikatorow
+
         StatTab.setContent(StatPane);
-
-
 
 
         Tab ClassTab = new Tab("Class");
@@ -282,25 +440,15 @@ public class DnDNewCharacter {
             public void handle(ActionEvent event) {
                 String c = (String) WyborKlasy.getValue();//get the selected item
                 System.out.println("Your class is " + c);
-
-                switch (c){
-
-                    case("Barbarian"):
-                        switch (LvlBox.getValue()){
-
-                        }
-                        break;
-                }
             }
         });
 
 
 
-        Tab tab4 = new Tab("Alignment");
+        Tab AlignTab = new Tab("Alignment");
 
 
-
-        PanelZakladek.getTabs().addAll(StatTab, RaceTab, ClassTab, tab4);
+        PanelZakladek.getTabs().addAll(StatTab, RaceTab, ClassTab, AlignTab);
 
 
         Scene scene = new Scene(PanelZakladek, 600, 450);
