@@ -1,20 +1,14 @@
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import javax.script.Bindings;
 
 
 public class DnDNewCharacter {
 
-    public static void display (){
+    public static void ScenaDnD(){
         Stage Window = new Stage();
         Window.setTitle("Dungeons&Dragons 5ed. Charecter Sheet");
 
@@ -612,13 +606,10 @@ public class DnDNewCharacter {
         PodsumowaniePane.add(PodsStrNum,1,1);
 
 
-        Button DnD = new Button("Zapisz Postać");
-        DnD.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        Button Zapis = new Button("Zapisz Postać");
+        Zapis.setOnAction(event -> WyborPliku.Zapisz());
 
-            }
-        });
+        PodsumowaniePane.add(Zapis,0,4);
 
         Podsumowanie.setContent(PodsumowaniePane);
 
@@ -641,134 +632,128 @@ public class DnDNewCharacter {
         RaceLayout.setPadding(new Insets(15));
 
 
-        WyborRasy.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String s = (String) WyborRasy.getValue();//get the selected item
-                System.out.println("You're playing as " +s);
+        WyborRasy.setOnAction(event -> {
+            String s = (String) WyborRasy.getValue();//get the selected item
+            System.out.println("You're playing as " +s);
 
-                ComboBox<String> WyborPodRasy = new ComboBox<>();
-                WyborPodRasy.setPromptText("Choose Your Subrace");
+            ComboBox<String> WyborPodRasy = new ComboBox<>();
+            WyborPodRasy.setPromptText("Choose Your Subrace");
 
 
-                switch(s) {
-                    case "Dragonborn":
-                        Info.setText("Smok blablabla \n blaaewfagfaef");
-                        RaceLayout.getChildren().clear();
-                        RaceLayout.getChildren().addAll(WyborRasy,Info);
-                        break;
+            switch(s) {
+                case "Dragonborn":
+                    Info.setText("Smok blablabla \n blaaewfagfaef");
+                    RaceLayout.getChildren().clear();
+                    RaceLayout.getChildren().addAll(WyborRasy,Info);
+                    break;
 
-                    case "Dwarf":
-                        Info.setText("Informacje o Krasnalach blablabla \n blaaewfagfaef");
-                        WyborPodRasy.getItems().addAll("Hill Dwarf", "Mountain Dwarf");
-                        RaceLayout.getChildren().clear();
-                        RaceLayout.getChildren().addAll(WyborRasy, WyborPodRasy, Info);
-                        break;
+                case "Dwarf":
+                    Info.setText("Informacje o Krasnalach blablabla \n blaaewfagfaef");
+                    WyborPodRasy.getItems().addAll("Hill Dwarf", "Mountain Dwarf");
+                    RaceLayout.getChildren().clear();
+                    RaceLayout.getChildren().addAll(WyborRasy, WyborPodRasy, Info);
+                    break;
 
-                    case "Elf":
-                        Info.setText("Informacje o Elfach blablabla \n blaaewfagfaef");
-                        WyborPodRasy.getItems().addAll("High Elf", "Wood Elf", "Drow");
-                        RaceLayout.getChildren().clear();
-                        RaceLayout.getChildren().addAll(WyborRasy, WyborPodRasy, Info);
-                        break;
+                case "Elf":
+                    Info.setText("Informacje o Elfach blablabla \n blaaewfagfaef");
+                    WyborPodRasy.getItems().addAll("High Elf", "Wood Elf", "Drow");
+                    RaceLayout.getChildren().clear();
+                    RaceLayout.getChildren().addAll(WyborRasy, WyborPodRasy, Info);
+                    break;
 
-                    case "Gnome":
-                        Info.setText("Informacje o Gnomach blablabla \n blaaewfagfaef");
-                        WyborPodRasy.getItems().addAll("Forest Gnome", "Rock Gnome");
-                        RaceLayout.getChildren().clear();
-                        RaceLayout.getChildren().addAll(WyborRasy, WyborPodRasy, Info);
-                        break;
+                case "Gnome":
+                    Info.setText("Informacje o Gnomach blablabla \n blaaewfagfaef");
+                    WyborPodRasy.getItems().addAll("Forest Gnome", "Rock Gnome");
+                    RaceLayout.getChildren().clear();
+                    RaceLayout.getChildren().addAll(WyborRasy, WyborPodRasy, Info);
+                    break;
 
-                    case "Halfling":
-                        Info.setText("Informacje o Niziołkach blablabla \n blaaewfagfaef");
-                        WyborPodRasy.getItems().addAll("Lightfoot", "Stout");
-                        RaceLayout.getChildren().clear();
-                        RaceLayout.getChildren().addAll(WyborRasy, WyborPodRasy, Info);
-                        break;
+                case "Halfling":
+                    Info.setText("Informacje o Niziołkach blablabla \n blaaewfagfaef");
+                    WyborPodRasy.getItems().addAll("Lightfoot", "Stout");
+                    RaceLayout.getChildren().clear();
+                    RaceLayout.getChildren().addAll(WyborRasy, WyborPodRasy, Info);
+                    break;
 
-                    case "Half-Elf":
-                        Info.setText("Informacje o Pół-Elfach blablabla \n blaaewfagfaef");
-                        RaceLayout.getChildren().clear();
-                        RaceLayout.getChildren().addAll(WyborRasy, Info);
-                        break;
+                case "Half-Elf":
+                    Info.setText("Informacje o Pół-Elfach blablabla \n blaaewfagfaef");
+                    RaceLayout.getChildren().clear();
+                    RaceLayout.getChildren().addAll(WyborRasy, Info);
+                    break;
 
-                    case "Half-Orc":
-                        Info.setText("Informacje o Pół-Orkach blablabla \n blaaewfagfaef");
-                        RaceLayout.getChildren().clear();
-                        RaceLayout.getChildren().addAll(WyborRasy, Info);
-                        break;
+                case "Half-Orc":
+                    Info.setText("Informacje o Pół-Orkach blablabla \n blaaewfagfaef");
+                    RaceLayout.getChildren().clear();
+                    RaceLayout.getChildren().addAll(WyborRasy, Info);
+                    break;
 
-                    case "Human":
-                        Info.setText("Informacje o Ludziach blablabla \n blaaewfagfaef");
-                        RaceLayout.getChildren().clear();
-                        RaceLayout.getChildren().addAll(WyborRasy, Info);
-                        break;
+                case "Human":
+                    Info.setText("Informacje o Ludziach blablabla \n blaaewfagfaef");
+                    RaceLayout.getChildren().clear();
+                    RaceLayout.getChildren().addAll(WyborRasy, Info);
+                    break;
 
-                    case "Thiefling":
-                        Info.setText("Informacje o Thieflingach blablabla \n blaaewfagfaef");
-                        RaceLayout.getChildren().clear();
-                        RaceLayout.getChildren().addAll(WyborRasy, Info);
-                        break;
-
-                }
-
-                WyborPodRasy.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        String x = (String) WyborPodRasy.getValue();//get the selected item
-                        System.out.println("Your subrace is " +x);
-
-                        switch (x){
-                            case("Hill Dwarf"):
-                                InfoPod.setText("Hill Dwarf blablabla \n blaaewfagfaef");
-                                RaceLayout.getChildren().addAll(InfoPod);
-                                break;
-
-
-                            case ("Mountain Dwarf"):
-                                InfoPod.setText("Mountain Dwarf blablabla \n blaaewfagfaef");
-                                RaceLayout.getChildren().addAll(InfoPod);
-                                break;
-
-                            case ("Forest Gnome"):
-                                InfoPod.setText("Forest Gnome blablabla \n blaaewfagfaef");
-                                RaceLayout.getChildren().addAll(InfoPod);
-                                break;
-
-                            case ("Rock Gnome"):
-                                InfoPod.setText("Rock Gnome blablabla \n blaaewfagfaef");
-                                RaceLayout.getChildren().addAll(InfoPod);
-                                break;
-
-                            case ("Stout"):
-                                InfoPod.setText("Stout Halfling blablabla \n blaaewfagfaef");
-                                RaceLayout.getChildren().addAll(InfoPod);
-                                break;
-
-                            case ("Lightfoot"):
-                                InfoPod.setText("Lightfoot Halfling blablabla \n blaaewfagfaef");
-                                RaceLayout.getChildren().addAll(InfoPod);
-                                break;
-
-                            case ("High Elf"):
-                                InfoPod.setText("High Elf blablabla \n blaaewfagfaef");
-                                RaceLayout.getChildren().addAll(InfoPod);
-                                break;
-
-                            case ("Wood Elf"):
-                                InfoPod.setText("Wood Elf blablabla \n blaaewfagfaef");
-                                RaceLayout.getChildren().addAll(InfoPod);
-                                break;
-
-                            case ("Drow"):
-                                InfoPod.setText("Drow blablabla \n blaaewfagfaef");
-                                RaceLayout.getChildren().addAll(InfoPod);
-                                break;
-                        }
-                    }
-                });
+                case "Thiefling":
+                    Info.setText("Informacje o Thieflingach blablabla \n blaaewfagfaef");
+                    RaceLayout.getChildren().clear();
+                    RaceLayout.getChildren().addAll(WyborRasy, Info);
+                    break;
 
             }
+
+            WyborPodRasy.setOnAction(event1 -> {
+                String x = (String) WyborPodRasy.getValue();//get the selected item
+                System.out.println("Your subrace is " +x);
+
+                switch (x){
+                    case("Hill Dwarf"):
+                        InfoPod.setText("Hill Dwarf blablabla \n blaaewfagfaef");
+                        RaceLayout.getChildren().addAll(InfoPod);
+                        break;
+
+
+                    case ("Mountain Dwarf"):
+                        InfoPod.setText("Mountain Dwarf blablabla \n blaaewfagfaef");
+                        RaceLayout.getChildren().addAll(InfoPod);
+                        break;
+
+                    case ("Forest Gnome"):
+                        InfoPod.setText("Forest Gnome blablabla \n blaaewfagfaef");
+                        RaceLayout.getChildren().addAll(InfoPod);
+                        break;
+
+                    case ("Rock Gnome"):
+                        InfoPod.setText("Rock Gnome blablabla \n blaaewfagfaef");
+                        RaceLayout.getChildren().addAll(InfoPod);
+                        break;
+
+                    case ("Stout"):
+                        InfoPod.setText("Stout Halfling blablabla \n blaaewfagfaef");
+                        RaceLayout.getChildren().addAll(InfoPod);
+                        break;
+
+                    case ("Lightfoot"):
+                        InfoPod.setText("Lightfoot Halfling blablabla \n blaaewfagfaef");
+                        RaceLayout.getChildren().addAll(InfoPod);
+                        break;
+
+                    case ("High Elf"):
+                        InfoPod.setText("High Elf blablabla \n blaaewfagfaef");
+                        RaceLayout.getChildren().addAll(InfoPod);
+                        break;
+
+                    case ("Wood Elf"):
+                        InfoPod.setText("Wood Elf blablabla \n blaaewfagfaef");
+                        RaceLayout.getChildren().addAll(InfoPod);
+                        break;
+
+                    case ("Drow"):
+                        InfoPod.setText("Drow blablabla \n blaaewfagfaef");
+                        RaceLayout.getChildren().addAll(InfoPod);
+                        break;
+                }
+            });
+
         });
 
 
@@ -791,12 +776,9 @@ public class DnDNewCharacter {
 
 
 
-        WyborKlasy.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String c = (String) WyborKlasy.getValue();//get the selected item
-                System.out.println("Your class is " + c);
-            }
+        WyborKlasy.setOnAction(event -> {
+            String c = (String) WyborKlasy.getValue();//get the selected item
+            System.out.println("Your class is " + c);
         });
 
 

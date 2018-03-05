@@ -1,20 +1,17 @@
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 public class Main extends Application
 {
     Stage OknoStartowe;
     Scene Start, Opcje;
 
 
-    public void start(Stage primaryStage) throws Exception
+    public void start(Stage primaryStage)
     {
 
         OknoStartowe = primaryStage;
@@ -22,12 +19,7 @@ public class Main extends Application
         Label wybor = new Label("Wybierz system:  ");
 
         Button DnD = new Button("Dungeons&Dragons 5ed.");
-        DnD.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                OknoStartowe.setScene(Opcje);
-            }
-        });
+        DnD.setOnAction(event -> OknoStartowe.setScene(Opcje));
 
         Button OtherSys = new Button();
         OtherSys.setText("Inny System");
@@ -42,37 +34,22 @@ public class Main extends Application
 
 
         Button wstecz = new Button ("Back");
-        wstecz.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                OknoStartowe.setScene(Start);
-            }
-        });
+        wstecz.setOnAction(event -> OknoStartowe.setScene(Start));
 
         Button nowa = new Button("New Character");
-        nowa.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DnDNewCharacter.display();
-                OknoStartowe.close();
-            }
+        nowa.setOnAction(event -> {
+            DnDNewCharacter.ScenaDnD();
+            OknoStartowe.close();
         });
 
 
-        Button wczytaj = new Button("Load Character");
-        wczytaj.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-            }
-        });
+        Button Wczytaj = new Button("Load Character");
+        Wczytaj.setOnAction(event -> WyborPliku.Wczytaj());
 
         VBox OptionsLayout = new VBox(20);
-        OptionsLayout.getChildren().addAll(nowa, wczytaj, wstecz);
+        OptionsLayout.getChildren().addAll(nowa, Wczytaj, wstecz);
         OptionsLayout.setAlignment(Pos.CENTER);
         Opcje = new Scene(OptionsLayout,600, 450);
-
-
 
 
         OknoStartowe.setScene(Start);
