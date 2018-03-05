@@ -16,14 +16,614 @@ public class DnDNewCharacter {
 
     public static void display (){
         Stage Window = new Stage();
-        Window.setTitle("Dungeons&Dragons Charecter Sheet");
+        Window.setTitle("Dungeons&Dragons 5ed. Charecter Sheet");
 
         TabPane PanelZakladek = new TabPane();
         PanelZakladek.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
 
 
-        //rasa
+        //STATYSTYKI
+        Spinner<Integer> StrenghtSpinn = new Spinner(1,30,8);
+        Spinner<Integer> DexteritySpinn = new Spinner(1,30,8);
+        Spinner<Integer> ConstitutionSpinn = new Spinner(1,30,8);
+        Spinner<Integer> IntelligenceSpinn = new Spinner(1,30,8);
+        Spinner<Integer> WisdomSpinn = new Spinner(1,30,8);
+        Spinner<Integer> CharismaSpinn = new Spinner(1,30,8);
+        Spinner<Integer> LvlSpinn = new Spinner(1,20,1);
+        Label Lvl = new Label(), Str = new Label(), Dex = new Label(), Constitution = new Label(), Intel = new Label(), Wis = new Label(), Charisma = new Label();
+
+        Str.setText("Strength: ");
+        Dex.setText("Dexterity: ");
+        Constitution.setText("Constitution: ");
+        Intel.setText("Intelligence: ");
+        Wis.setText("Wisdom: ");
+        Charisma.setText("Charisma: ");
+        Lvl.setText("Character LVL");
+
+        Tab StatTab = new Tab("Stats");
+
+
+        GridPane StatPane = new GridPane();
+        StatPane.setPadding(new Insets(10));
+        StatPane.setHgap(5);
+        StatPane.setVgap(5);
+        ColumnConstraints Kolumna1 = new ColumnConstraints(75);
+        ColumnConstraints Kolumna2 = new ColumnConstraints(165);
+        ColumnConstraints Kolumna3 = new ColumnConstraints();
+
+        Label Please = new Label("Please set your starting stats:");
+        final Integer[] Pkt = {27};
+        Label Punkty = new Label("Points to spend: 27");
+        Label StrModifier = new Label("Strenght Modifier: -1");
+        Label DexModifier = new Label("Dexterity Modifier: -1");
+        Label ConstModifier = new Label("Constitution Modifier: -1");
+        Label IntModifier = new Label("Intelligence Modifier: -1");
+        Label WisModifier = new Label("Wisdom Modifier: -1");
+        Label CharModifier = new Label("Charisma Modifier: -1");
+        Label Proficiency = new Label("Proficiency Bonus: +2");
+
+
+
+
+        StatPane.getColumnConstraints().addAll(Kolumna1, Kolumna2, Kolumna3);
+
+        StatPane.add(Lvl,0,0);
+        StatPane.add(LvlSpinn,1,0);
+        StatPane.add(Proficiency,2,0);
+        StatPane.add(Please,1,2);
+        StatPane.add(Str, 0, 3);
+        StatPane.add(StrenghtSpinn,1,3);
+        StatPane.add(StrModifier,2,3);
+        StatPane.add(Dex, 0, 4);
+        StatPane.add(DexteritySpinn,1,4);
+        StatPane.add(DexModifier,2,4);
+        StatPane.add(Constitution, 0, 5);
+        StatPane.add(ConstitutionSpinn,1,5);
+        StatPane.add(ConstModifier,2,5);
+        StatPane.add(Intel, 0, 6);
+        StatPane.add(IntelligenceSpinn,1,6);
+        StatPane.add(IntModifier,2,6);
+        StatPane.add(Wis, 0, 7);
+        StatPane.add(WisdomSpinn,1,7);
+        StatPane.add(WisModifier,2,7);
+        StatPane.add(Charisma, 0, 8);
+        StatPane.add(CharismaSpinn,1,8);
+        StatPane.add(CharModifier,2,8);
+        StatPane.add(Punkty,1,10);
+
+
+        //BARDZO WAZNE LICZNIKI PUNKTOW
+
+        StrenghtSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+
+            //TUTAJ SA WYPISYWANE MODYFIKATORY DO SILY
+            if(newValue<=1) {
+                StrModifier.setText("Strenght Modifier: -5");
+            }
+            if(newValue>=2&&newValue<=3){
+                StrModifier.setText("Strenght Modifier: -4");
+            }
+            if(newValue>=4&&newValue<=5) {
+                StrModifier.setText("Strenght Modifier: -3");
+            }
+            if(newValue>=6&&newValue<=7){
+                StrModifier.setText("Strenght Modifier: -2");
+            }
+            if(newValue>=8&&newValue<=9) {
+                StrModifier.setText("Strenght Modifier: -1");
+            }
+            if(newValue>=10&&newValue<=11){
+                StrModifier.setText("Strenght Modifier: 0");
+            }
+            if(newValue>=12&&newValue<=13) {
+                StrModifier.setText("Strenght Modifier: +1");
+            }
+            if(newValue>=14&&newValue<=15){
+                StrModifier.setText("Strenght Modifier: +2");
+            }
+            if(newValue>=16&&newValue<=17) {
+                StrModifier.setText("Strenght Modifier: +3");
+            }
+            if(newValue>=18&&newValue<=19){
+                StrModifier.setText("Strenght Modifier: +4");
+            }
+            if(newValue>=20&&newValue<=21) {
+                StrModifier.setText("Strenght Modifier: +5");
+            }
+            if(newValue>=22&&newValue<=23){
+                StrModifier.setText("Strenght Modifier: +6");
+            }
+            if(newValue>=24&&newValue<=25) {
+                StrModifier.setText("Strenght Modifier: +7");
+            }
+            if(newValue>=26&&newValue<=27){
+                StrModifier.setText("Strenght Modifier: +8");
+            }
+            if(newValue>=28&&newValue<=29) {
+                StrModifier.setText("Strenght Modifier: +9");
+            }
+            if(newValue>=30){
+                StrModifier.setText("Strenght Modifier: +10");
+            }
+        });
+
+        DexteritySpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+
+            //MODYFIKATORY
+            if(newValue<=1) {
+                DexModifier.setText("Dexterity Modifier: -5");
+            }
+            if(newValue>=2&&newValue<=3){
+                DexModifier.setText("Dexterity Modifier: -4");
+            }
+            if(newValue>=4&&newValue<=5) {
+                DexModifier.setText("Dexterity Modifier: -3");
+            }
+            if(newValue>=6&&newValue<=7){
+                DexModifier.setText("Dexterity Modifier: -2");
+            }
+            if(newValue>=8&&newValue<=9) {
+                DexModifier.setText("Dexterity Modifier: -1");
+            }
+            if(newValue>=10&&newValue<=11){
+                DexModifier.setText("Dexterity Modifier: 0");
+            }
+            if(newValue>=12&&newValue<=13) {
+                DexModifier.setText("Dexterity Modifier: +1");
+            }
+            if(newValue>=14&&newValue<=15){
+                DexModifier.setText("Dexterity Modifier: +2");
+            }
+            if(newValue>=16&&newValue<=17) {
+                DexModifier.setText("Dexterity Modifier: +3");
+            }
+            if(newValue>=18&&newValue<=19){
+                DexModifier.setText("Dexterity Modifier: +4");
+            }
+            if(newValue>=20&&newValue<=21) {
+                DexModifier.setText("Dexterity Modifier: +5");
+            }
+            if(newValue>=22&&newValue<=23){
+                DexModifier.setText("Dexterity Modifier: +6");
+            }
+            if(newValue>=24&&newValue<=25) {
+                DexModifier.setText("Dexterity Modifier: +7");
+            }
+            if(newValue>=26&&newValue<=27){
+                DexModifier.setText("Dexterity Modifier: +8");
+            }
+            if(newValue>=28&&newValue<=29) {
+                DexModifier.setText("Dexterity Modifier: +9");
+            }
+            if(newValue>=30){
+                DexModifier.setText("Dexterity Modifier: +10");
+            }
+        });
+
+        ConstitutionSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+
+            //MODYFIKATORY
+            if(newValue<=1) {
+                ConstModifier.setText("Constitution Modifier: -5");
+            }
+            if(newValue>=2&&newValue<=3){
+                ConstModifier.setText("Constitution Modifier: -4");
+            }
+            if(newValue>=4&&newValue<=5) {
+                ConstModifier.setText("Constitution Modifier: -3");
+            }
+            if(newValue>=6&&newValue<=7){
+                ConstModifier.setText("Constitution Modifier: -2");
+            }
+            if(newValue>=8&&newValue<=9) {
+                ConstModifier.setText("Constitution Modifier: -1");
+            }
+            if(newValue>=10&&newValue<=11){
+                ConstModifier.setText("Constitution Modifier: 0");
+            }
+            if(newValue>=12&&newValue<=13) {
+                ConstModifier.setText("Constitution Modifier: +1");
+            }
+            if(newValue>=14&&newValue<=15){
+                ConstModifier.setText("Constitution Modifier: +2");
+            }
+            if(newValue>=16&&newValue<=17) {
+                ConstModifier.setText("Constitution Modifier: +3");
+            }
+            if(newValue>=18&&newValue<=19){
+                ConstModifier.setText("Constitution Modifier: +4");
+            }
+            if(newValue>=20&&newValue<=21) {
+                ConstModifier.setText("Constitution Modifier: +5");
+            }
+            if(newValue>=22&&newValue<=23){
+                ConstModifier.setText("Constitution Modifier: +6");
+            }
+            if(newValue>=24&&newValue<=25) {
+                ConstModifier.setText("Constitution Modifier: +7");
+            }
+            if(newValue>=26&&newValue<=27){
+                ConstModifier.setText("Constitution Modifier: +8");
+            }
+            if(newValue>=28&&newValue<=29) {
+                ConstModifier.setText("Constitution Modifier: +9");
+            }
+            if(newValue>=30){
+                ConstModifier.setText("Constitution Modifier: +10");
+            }
+        });
+
+        IntelligenceSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+
+            //MODYFIKATORY
+            if(newValue<=1) {
+                IntModifier.setText("Intelligence Modifier: -5");
+            }
+            if(newValue>=2&&newValue<=3){
+                IntModifier.setText("Intelligence Modifier: -4");
+            }
+            if(newValue>=4&&newValue<=5) {
+                IntModifier.setText("Intelligence Modifier: -3");
+            }
+            if(newValue>=6&&newValue<=7){
+                IntModifier.setText("Intelligence Modifier: -2");
+            }
+            if(newValue>=8&&newValue<=9) {
+                IntModifier.setText("Intelligence Modifier: -1");
+            }
+            if(newValue>=10&&newValue<=11){
+                IntModifier.setText("Intelligence Modifier: 0");
+            }
+            if(newValue>=12&&newValue<=13) {
+                IntModifier.setText("Intelligence Modifier: +1");
+            }
+            if(newValue>=14&&newValue<=15){
+                IntModifier.setText("Intelligence Modifier: +2");
+            }
+            if(newValue>=16&&newValue<=17) {
+                IntModifier.setText("Intelligence Modifier: +3");
+            }
+            if(newValue>=18&&newValue<=19){
+                IntModifier.setText("Intelligence Modifier: +4");
+            }
+            if(newValue>=20&&newValue<=21) {
+                IntModifier.setText("Intelligence Modifier: +5");
+            }
+            if(newValue>=22&&newValue<=23){
+                IntModifier.setText("Intelligence Modifier: +6");
+            }
+            if(newValue>=24&&newValue<=25) {
+                IntModifier.setText("Intelligence Modifier: +7");
+            }
+            if(newValue>=26&&newValue<=27){
+                IntModifier.setText("Intelligence Modifier: +8");
+            }
+            if(newValue>=28&&newValue<=29) {
+                IntModifier.setText("Intelligence Modifier: +9");
+            }
+            if(newValue>=30){
+                IntModifier.setText("Intelligence Modifier: +10");
+            }
+        });
+
+        WisdomSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+
+            //MODYFIKATORY
+            if(newValue<=1) {
+                WisModifier.setText("Wisdom Modifier: -5");
+            }
+            if(newValue>=2&&newValue<=3){
+                WisModifier.setText("Wisdom Modifier: -4");
+            }
+            if(newValue>=4&&newValue<=5) {
+                WisModifier.setText("Wisdom Modifier: -3");
+            }
+            if(newValue>=6&&newValue<=7){
+                WisModifier.setText("Wisdom Modifier: -2");
+            }
+            if(newValue>=8&&newValue<=9) {
+                WisModifier.setText("Wisdom Modifier: -1");
+            }
+            if(newValue>=10&&newValue<=11){
+                WisModifier.setText("Wisdom Modifier: 0");
+            }
+            if(newValue>=12&&newValue<=13) {
+                WisModifier.setText("Wisdom Modifier: +1");
+            }
+            if(newValue>=14&&newValue<=15){
+                WisModifier.setText("Wisdom Modifier: +2");
+            }
+            if(newValue>=16&&newValue<=17) {
+                WisModifier.setText("Wisdom Modifier: +3");
+            }
+            if(newValue>=18&&newValue<=19){
+                WisModifier.setText("Wisdom Modifier: +4");
+            }
+            if(newValue>=20&&newValue<=21) {
+                WisModifier.setText("Wisdom Modifier: +5");
+            }
+            if(newValue>=22&&newValue<=23){
+                WisModifier.setText("Wisdom Modifier: +6");
+            }
+            if(newValue>=24&&newValue<=25) {
+                WisModifier.setText("Wisdom Modifier: +7");
+            }
+            if(newValue>=26&&newValue<=27){
+                WisModifier.setText("Wisdom Modifier: +8");
+            }
+            if(newValue>=28&&newValue<=29) {
+                WisModifier.setText("Wisdom Modifier: +9");
+            }
+            if(newValue>=30){
+                WisModifier.setText("Wisdom Modifier: +10");
+            }
+        });
+
+        CharismaSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
+            if(oldValue<newValue&&newValue<=13&&newValue>8){
+                Pkt[0] -=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=8&&newValue<13){
+                Pkt[0] +=1;
+                System.out.println("Punkty do wydania "+ Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(newValue<8){
+                System.out.println("Uwaga, jestes gorszy od ludzia");
+            }
+            if(newValue>15){
+                System.out.println("Uwaga, jestes lepszy od ludzia");
+            }
+            if(newValue>oldValue&&newValue>13){
+                Pkt[0]-=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+            if(oldValue>newValue&&newValue>=13){
+                Pkt[0]+=2;
+                System.out.println("Punkty do wydania "+Pkt[0]);
+                Punkty.setText("Points to spend:  "+ Pkt[0]);
+            }
+
+            //MODYFIKATORY
+            if(newValue<=1) {
+                CharModifier.setText("Charisma Modifier: -5");
+            }
+            if(newValue>=2&&newValue<=3){
+                CharModifier.setText("Charisma Modifier: -4");
+            }
+            if(newValue>=4&&newValue<=5) {
+                CharModifier.setText("Charisma Modifier: -3");
+            }
+            if(newValue>=6&&newValue<=7){
+                CharModifier.setText("Charisma Modifier: -2");
+            }
+            if(newValue>=8&&newValue<=9) {
+                CharModifier.setText("Charisma Modifier: -1");
+            }
+            if(newValue>=10&&newValue<=11){
+                CharModifier.setText("Charisma Modifier: 0");
+            }
+            if(newValue>=12&&newValue<=13) {
+                CharModifier.setText("Charisma Modifier: +1");
+            }
+            if(newValue>=14&&newValue<=15){
+                CharModifier.setText("Charisma Modifier: +2");
+            }
+            if(newValue>=16&&newValue<=17) {
+                CharModifier.setText("Charisma Modifier: +3");
+            }
+            if(newValue>=18&&newValue<=19){
+                CharModifier.setText("Charisma Modifier: +4");
+            }
+            if(newValue>=20&&newValue<=21) {
+                CharModifier.setText("Charisma Modifier: +5");
+            }
+            if(newValue>=22&&newValue<=23){
+                CharModifier.setText("Charisma Modifier: +6");
+            }
+            if(newValue>=24&&newValue<=25) {
+                CharModifier.setText("Charisma Modifier: +7");
+            }
+            if(newValue>=26&&newValue<=27){
+                CharModifier.setText("Charisma Modifier: +8");
+            }
+            if(newValue>=28&&newValue<=29) {
+                CharModifier.setText("Charisma Modifier: +9");
+            }
+            if(newValue>=30){
+                CharModifier.setText("Charisma Modifier: +10");
+            }
+        });
+
+        LvlSpinn.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue>=5&&newValue<=8) {
+                Proficiency.setText("Proficiency Bonus: +3");
+            }
+            if(newValue>=9&&newValue<=12){
+                Proficiency.setText("Proficiency Bonus: +4");
+            }
+            if(newValue>=13&&newValue<=16){
+                Proficiency.setText("Proficiency Bonus: +5");
+            }
+            if(newValue>=17){
+                Proficiency.setText("Proficiency Bonus: +6");
+            }
+        });
+
+        //Koniec BARDZO WAZNEGO LICZNIKA
+
+
+
+        //Probny tab na podsumowanie
+        StatTab.setContent(StatPane);
+
+        Tab Podsumowanie = new Tab("All in All");
+        GridPane PodsumowaniePane = new GridPane();
+        PodsumowaniePane.setPadding(new Insets(10));
+        PodsumowaniePane.setHgap(5);
+        PodsumowaniePane.setVgap(5);
+        ColumnConstraints Kol1 = new ColumnConstraints(75);
+        ColumnConstraints Kol2 = new ColumnConstraints(165);
+        ColumnConstraints Kol3 = new ColumnConstraints();
+
+        Label PodsLvlNum = new Label(), PodsLvl = new Label();
+        PodsLvl.setText("Your current LVL: ");
+        PodsLvlNum.textProperty().bind(LvlSpinn.valueProperty().asString());
+        Label PodsStrNum = new Label(), PodsStr = new Label();
+        PodsStr.setText("Your current Strenght: ");
+        PodsStrNum.textProperty().bind(StrenghtSpinn.valueProperty().asString());
+        PodsumowaniePane.add(PodsLvl,0,0);
+        PodsumowaniePane.add(PodsLvlNum,1,0);
+        PodsumowaniePane.add(PodsStr,0,1);
+        PodsumowaniePane.add(PodsStrNum,1,1);
+
+
+        Button DnD = new Button("Zapisz Postać");
+        DnD.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+            }
+        });
+
+        Podsumowanie.setContent(PodsumowaniePane);
+
+
+        //RASA
 
         Tab RaceTab = new Tab("Race");
         ComboBox<String> WyborRasy = new ComboBox<>();
@@ -39,28 +639,6 @@ public class DnDNewCharacter {
         RaceLayout.getChildren().addAll(WyborRasy);
         RaceLayout.setAlignment(Pos.TOP_CENTER);
         RaceLayout.setPadding(new Insets(15));
-
-
-
-        //statystyki
-        Spinner<Integer> StrenghtSpinn = new Spinner(1,20,8);
-        Spinner<Integer> DexteritySpinn = new Spinner(1,20,8);
-        Spinner<Integer> ConstitutionSpinn = new Spinner(1,20,8);
-        Spinner<Integer> IntelligenceSpinn = new Spinner(1,20,8);
-        Spinner<Integer> WisdomSpinn = new Spinner(1,20,8);
-        Spinner<Integer> CharismaSpinn = new Spinner(1,20,8);
-        ComboBox<Integer> LvlBox = new ComboBox();
-        Label Lvl = new Label(), Str = new Label(), Dex = new Label(), Constitution = new Label(), Intel = new Label(), Wis = new Label(), Charisma = new Label();
-
-        Str.setText("Strength: ");
-        Dex.setText("Dexterity: ");
-        Constitution.setText("Constitution: ");
-        Intel.setText("Intelligence: ");
-        Wis.setText("Wisdom: ");
-        Charisma.setText("Charisma: ");
-        Lvl.setText("Character LVL");
-        LvlBox.getItems().addAll(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
-        LvlBox.setValue(1);
 
 
         WyborRasy.setOnAction(new EventHandler<ActionEvent>() {
@@ -194,229 +772,7 @@ public class DnDNewCharacter {
         });
 
 
-
-        // Statystyki 2
-        Tab StatTab = new Tab("Stats");
-
-        GridPane StatPane = new GridPane();
-        StatPane.setPadding(new Insets(10));
-        StatPane.setHgap(5);
-        StatPane.setVgap(5);
-        ColumnConstraints Kolumna1 = new ColumnConstraints(75);
-        ColumnConstraints Kolumna2 = new ColumnConstraints(155);
-        ColumnConstraints Kolumna3 = new ColumnConstraints(155);
-
-        Label Please = new Label("Please set your starting stats:");
-        final Integer[] Pkt = {27};
-        Label Punkty = new Label("Points to spend: 27");
-
-        StatPane.getColumnConstraints().addAll(Kolumna1, Kolumna2, Kolumna3);
-
-        StatPane.add(Lvl,0,0);
-        StatPane.add(LvlBox,1,0);
-        StatPane.add(Please,1,2);
-        StatPane.add(Str, 0, 3);
-        StatPane.add(StrenghtSpinn,1,3);
-        StatPane.add(Dex, 0, 4);
-        StatPane.add(DexteritySpinn,1,4);
-        StatPane.add(Constitution, 0, 5);
-        StatPane.add(ConstitutionSpinn,1,5);
-        StatPane.add(Intel, 0, 6);
-        StatPane.add(IntelligenceSpinn,1,6);
-        StatPane.add(Wis, 0, 7);
-        StatPane.add(WisdomSpinn,1,7);
-        StatPane.add(Charisma, 0, 8);
-        StatPane.add(CharismaSpinn,1,8);
-        StatPane.add(Punkty,1,10);
-
-
-        //BARDZO WAZNE LICZNIKI PUNKTOW
-
-        StrenghtSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
-            if(oldValue<newValue&&newValue<=13&&newValue>8){
-                Pkt[0] -=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=8&&newValue<13){
-                Pkt[0] +=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(newValue<8){
-                System.out.println("Uwaga, jestes gorszy od ludzia");
-            }
-            if(newValue>15){
-                System.out.println("Uwaga, jestes lepszy od ludzia");
-            }
-            if(newValue>oldValue&&newValue>13){
-                Pkt[0]-=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=13){
-                Pkt[0]+=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-        });
-
-        DexteritySpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
-            if(oldValue<newValue&&newValue<=13&&newValue>8){
-                Pkt[0] -=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=8&&newValue<13){
-                Pkt[0] +=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(newValue<8){
-                System.out.println("Uwaga, jestes gorszy od ludzia");
-            }
-            if(newValue>15){
-                System.out.println("Uwaga, jestes lepszy od ludzia");
-            }
-            if(newValue>oldValue&&newValue>13){
-                Pkt[0]-=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=13){
-                Pkt[0]+=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-        });
-
-        ConstitutionSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
-            if(oldValue<newValue&&newValue<=13&&newValue>8){
-                Pkt[0] -=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=8&&newValue<13){
-                Pkt[0] +=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(newValue<8){
-                System.out.println("Uwaga, jestes gorszy od ludzia");
-            }
-            if(newValue>15){
-                System.out.println("Uwaga, jestes lepszy od ludzia");
-            }
-            if(newValue>oldValue&&newValue>13){
-                Pkt[0]-=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=13){
-                Pkt[0]+=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-        });
-
-        IntelligenceSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
-            if(oldValue<newValue&&newValue<=13&&newValue>8){
-                Pkt[0] -=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=8&&newValue<13){
-                Pkt[0] +=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(newValue<8){
-                System.out.println("Uwaga, jestes gorszy od ludzia");
-            }
-            if(newValue>15){
-                System.out.println("Uwaga, jestes lepszy od ludzia");
-            }
-            if(newValue>oldValue&&newValue>13){
-                Pkt[0]-=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=13){
-                Pkt[0]+=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-        });
-
-        WisdomSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
-            if(oldValue<newValue&&newValue<=13&&newValue>8){
-                Pkt[0] -=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=8&&newValue<13){
-                Pkt[0] +=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(newValue<8){
-                System.out.println("Uwaga, jestes gorszy od ludzia");
-            }
-            if(newValue>15){
-                System.out.println("Uwaga, jestes lepszy od ludzia");
-            }
-            if(newValue>oldValue&&newValue>13){
-                Pkt[0]-=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=13){
-                Pkt[0]+=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-        });
-
-        CharismaSpinn.valueProperty().addListener((observable, oldValue, newValue) ->{
-            if(oldValue<newValue&&newValue<=13&&newValue>8){
-                Pkt[0] -=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=8&&newValue<13){
-                Pkt[0] +=1;
-                System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(newValue<8){
-                System.out.println("Uwaga, jestes gorszy od ludzia");
-            }
-            if(newValue>15){
-                System.out.println("Uwaga, jestes lepszy od ludzia");
-            }
-            if(newValue>oldValue&&newValue>13){
-                Pkt[0]-=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-            if(oldValue>newValue&&newValue>=13){
-                Pkt[0]+=2;
-                System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
-            }
-        });
-
-        //Koniec BARDZO WAZNEGO LICZNIKA
-
-        //Dodaję modyfikatory
-
-
-
-
-        //Koniec modyfikatorow
-
-        StatTab.setContent(StatPane);
-
+        //KLASA
 
         Tab ClassTab = new Tab("Class");
 
@@ -448,7 +804,7 @@ public class DnDNewCharacter {
         Tab AlignTab = new Tab("Alignment");
 
 
-        PanelZakladek.getTabs().addAll(StatTab, RaceTab, ClassTab, AlignTab);
+        PanelZakladek.getTabs().addAll(StatTab, RaceTab, ClassTab, AlignTab, Podsumowanie);
 
 
         Scene scene = new Scene(PanelZakladek, 600, 450);

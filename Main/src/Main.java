@@ -21,7 +21,7 @@ public class Main extends Application
         OknoStartowe.setTitle("Universal Character Generator");
         Label wybor = new Label("Wybierz system:  ");
 
-        Button DnD = new Button("Dungeons&Dragons");
+        Button DnD = new Button("Dungeons&Dragons 5ed.");
         DnD.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -33,10 +33,10 @@ public class Main extends Application
         OtherSys.setText("Inny System");
 
 
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(wybor, DnD, OtherSys);
-        layout1.setAlignment(Pos.CENTER);
-        Start = new Scene(layout1, 600, 450);
+        VBox StartWindowLayout = new VBox(20);
+        StartWindowLayout.getChildren().addAll(wybor, DnD, OtherSys);
+        StartWindowLayout.setAlignment(Pos.CENTER);
+        Start = new Scene(StartWindowLayout, 600, 450);
 
 
 
@@ -60,12 +60,17 @@ public class Main extends Application
 
 
         Button wczytaj = new Button("Load Character");
+        wczytaj.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
 
+            }
+        });
 
-        VBox layout2 = new VBox(20);
-        layout2.getChildren().addAll(nowa, wczytaj, wstecz);
-        layout2.setAlignment(Pos.CENTER);
-        Opcje = new Scene(layout2,600, 450);
+        VBox OptionsLayout = new VBox(20);
+        OptionsLayout.getChildren().addAll(nowa, wczytaj, wstecz);
+        OptionsLayout.setAlignment(Pos.CENTER);
+        Opcje = new Scene(OptionsLayout,600, 450);
 
 
 
