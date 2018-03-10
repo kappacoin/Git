@@ -9,32 +9,11 @@ public class WyborPliku {
         FileChooser ChooseFileToLoad = new FileChooser();
         File KartaPostaci = ChooseFileToLoad.showOpenDialog(null);
         if (KartaPostaci != null) {
-            openFile(KartaPostaci);
-        }
-    }
-    /*
-    public static void Zapisz(){
-        FileChooser SaveFile = new FileChooser();
-        SaveFile.setTitle("Save Image");
-        File file = SaveFile.showSaveDialog(null);
-        if (file != null) {
             try {
-                BufferedWriter Zapis = new BufferedWriter(new FileWriter(Desktop.getDesktop().toString()));
-                Zapis.flush();
-                Label kk = new Label();
-                kk.setText("Stworzono postac 1, jedz kabanosy bo zdrowe");
-                Zapis.close();
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
+                Desktop.getDesktop().open(KartaPostaci);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }
-    }*/
-
-    private static void openFile(File KartaPostaci) {
-        try {
-            Desktop.getDesktop().open(KartaPostaci);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -49,9 +28,7 @@ public class WyborPliku {
             try{
                 BufferedWriter Zapis = new BufferedWriter(new FileWriter(selectedDirectory.getAbsolutePath().toString()+"/KartaPostaci.txt"));
                 Zapis.flush();
-                Label kk = new Label();
-                kk.setText("Stworzono postac 1, jedz kabanosy bo zdrowe");
-                Zapis.write();
+
                 Zapis.close();
             }catch (IOException e){
                 e.printStackTrace();

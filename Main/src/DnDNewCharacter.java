@@ -1,9 +1,15 @@
+import Domain.Race.*;
+import Domain.Race.Factories.RaceFactory;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 
 public class DnDNewCharacter {
@@ -48,7 +54,7 @@ public class DnDNewCharacter {
 
         Label Please = new Label("Please set your starting stats:");
         final Integer[] Pkt = {27};
-        Label Punkty = new Label("Points to spend: 27");
+        Label Points = new Label("Points to spend: 27");
         Label StrModifier = new Label("Strenght Modifier: -1");
         Label DexModifier = new Label("Dexterity Modifier: -1");
         Label ConstModifier = new Label("Constitution Modifier: -1");
@@ -84,7 +90,7 @@ public class DnDNewCharacter {
         StatPane.add(Charisma, 0, 8);
         StatPane.add(CharismaSpinn,1,8);
         StatPane.add(CharModifier,2,8);
-        StatPane.add(Punkty,1,10);
+        StatPane.add(Points,1,10);
 
 
         //BARDZO WAZNE LICZNIKI PUNKTOW
@@ -93,12 +99,12 @@ public class DnDNewCharacter {
             if(oldValue<newValue&&newValue<=13&&newValue>8){
                 Pkt[0] -=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=8&&newValue<13){
                 Pkt[0] +=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(newValue<8){
                 System.out.println("Uwaga, jestes gorszy od ludzia");
@@ -109,12 +115,12 @@ public class DnDNewCharacter {
             if(newValue>oldValue&&newValue>13){
                 Pkt[0]-=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=13){
                 Pkt[0]+=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
 
             //TUTAJ SA WYPISYWANE MODYFIKATORY DO SILY
@@ -172,12 +178,12 @@ public class DnDNewCharacter {
             if(oldValue<newValue&&newValue<=13&&newValue>8){
                 Pkt[0] -=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=8&&newValue<13){
                 Pkt[0] +=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(newValue<8){
                 System.out.println("Uwaga, jestes gorszy od ludzia");
@@ -188,12 +194,12 @@ public class DnDNewCharacter {
             if(newValue>oldValue&&newValue>13){
                 Pkt[0]-=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=13){
                 Pkt[0]+=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
 
             //MODYFIKATORY
@@ -251,12 +257,12 @@ public class DnDNewCharacter {
             if(oldValue<newValue&&newValue<=13&&newValue>8){
                 Pkt[0] -=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=8&&newValue<13){
                 Pkt[0] +=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(newValue<8){
                 System.out.println("Uwaga, jestes gorszy od ludzia");
@@ -267,12 +273,12 @@ public class DnDNewCharacter {
             if(newValue>oldValue&&newValue>13){
                 Pkt[0]-=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=13){
                 Pkt[0]+=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
 
             //MODYFIKATORY
@@ -330,12 +336,12 @@ public class DnDNewCharacter {
             if(oldValue<newValue&&newValue<=13&&newValue>8){
                 Pkt[0] -=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=8&&newValue<13){
                 Pkt[0] +=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(newValue<8){
                 System.out.println("Uwaga, jestes gorszy od ludzia");
@@ -346,12 +352,12 @@ public class DnDNewCharacter {
             if(newValue>oldValue&&newValue>13){
                 Pkt[0]-=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=13){
                 Pkt[0]+=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
 
             //MODYFIKATORY
@@ -409,12 +415,12 @@ public class DnDNewCharacter {
             if(oldValue<newValue&&newValue<=13&&newValue>8){
                 Pkt[0] -=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=8&&newValue<13){
                 Pkt[0] +=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(newValue<8){
                 System.out.println("Uwaga, jestes gorszy od ludzia");
@@ -425,12 +431,12 @@ public class DnDNewCharacter {
             if(newValue>oldValue&&newValue>13){
                 Pkt[0]-=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=13){
                 Pkt[0]+=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
 
             //MODYFIKATORY
@@ -488,12 +494,12 @@ public class DnDNewCharacter {
             if(oldValue<newValue&&newValue<=13&&newValue>8){
                 Pkt[0] -=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=8&&newValue<13){
                 Pkt[0] +=1;
                 System.out.println("Punkty do wydania "+ Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(newValue<8){
                 System.out.println("Uwaga, jestes gorszy od ludzia");
@@ -504,12 +510,12 @@ public class DnDNewCharacter {
             if(newValue>oldValue&&newValue>13){
                 Pkt[0]-=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
             if(oldValue>newValue&&newValue>=13){
                 Pkt[0]+=2;
                 System.out.println("Punkty do wydania "+Pkt[0]);
-                Punkty.setText("Points to spend:  "+ Pkt[0]);
+                Points.setText("Points to spend:  "+ Pkt[0]);
             }
 
             //MODYFIKATORY
@@ -608,18 +614,16 @@ public class DnDNewCharacter {
 
         Button Zapis = new Button("Zapisz Postać");
         Zapis.setOnAction(event -> WyborPliku.Zapisz());
-
         PodsumowaniePane.add(Zapis,0,4);
-
         Podsumowanie.setContent(PodsumowaniePane);
 
 
         //RASA
 
         Tab RaceTab = new Tab("Race");
-        ComboBox<String> WyborRasy = new ComboBox<>();
-        WyborRasy.getItems().addAll("Dragonborn", "Dwarf", "Elf", "Gnome", "Halfling", "Half-Elf", "Half-Orc", "Human", "Tiefling");
-        WyborRasy.setPromptText("Choose Your Race");
+        ComboBox<String> Races = new ComboBox<>();
+        Races.getItems().addAll("Dragonborn", "Dwarf", "Elf", "Gnome", "Halfling", "Half-Elf", "Half-Orc", "Human", "Tiefling");
+        Races.setPromptText("Choose Your Race");
 
         Label Info = new  Label();
         Label InfoPod = new Label();
@@ -627,12 +631,30 @@ public class DnDNewCharacter {
         VBox RaceLayout = new VBox(20);
         RaceTab.setContent(RaceLayout);
 
-        RaceLayout.getChildren().addAll(WyborRasy);
+        RaceLayout.getChildren().addAll(Races);
         RaceLayout.setAlignment(Pos.TOP_CENTER);
         RaceLayout.setPadding(new Insets(15));
 
+        Races.setOnAction((ActionEvent event) -> {
+            try{
+                RaceFactory factory = new RaceFactory();
+                Race chosenRace = factory.parse(Races.getValue());
+                System.out.println(ChosenRace.getClass());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        });
 
-        WyborRasy.setOnAction(event -> {
+
+        /*WyborRasy.setOnAction(event -> {
             String s = (String) WyborRasy.getValue();//get the selected item
             System.out.println("You're playing as " +s);
 
@@ -755,20 +777,21 @@ public class DnDNewCharacter {
             });
 
         });
+        */
 
 
         //KLASA
 
         Tab ClassTab = new Tab("Class");
 
-        ComboBox<String> WyborKlasy = new ComboBox<>();
-        WyborKlasy.getItems().addAll("Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk",
+        ComboBox<String> ChosenClass = new ComboBox<>();
+        ChosenClass.getItems().addAll("Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk",
                 "Paladin", "Ranger", "Rouge", "Sorcerer", "Warlock", "Wizard");
-        WyborKlasy.setPromptText("Choose Your Class");
+        ChosenClass.setPromptText("Choose Your Class");
 
 
         VBox ClassLayout = new VBox(20);
-        ClassLayout.getChildren().addAll(WyborKlasy);
+        ClassLayout.getChildren().addAll(ChosenClass);
         ClassLayout.setAlignment(Pos.TOP_CENTER);
         ClassLayout.setPadding(new Insets(15));
         ClassTab.setContent(ClassLayout);
@@ -776,8 +799,8 @@ public class DnDNewCharacter {
 
 
 
-        WyborKlasy.setOnAction(event -> {
-            String c = (String) WyborKlasy.getValue();//get the selected item
+        ChosenClass.setOnAction(event -> {
+            String c = ChosenClass.getValue();//get the selected item
             System.out.println("Your class is " + c);
         });
 
